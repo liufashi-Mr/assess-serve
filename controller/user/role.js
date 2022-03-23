@@ -10,9 +10,8 @@ router.post("/login", (req, res) => {
     });
     return;
   }
-  const roleTable =
-    role === ("teacher" || "admin" || "student") ? role : "role";
-  console.log(roleTable);
+  const roles = ["teacher", "admin", "student"];
+  const roleTable = roles.includes(role) ? role : "role";
   let sql = `select * from t_${roleTable} where username =? and password = ?`;
   if (roleTable === "role") {
     sql += ` and role =${roleTable}`;

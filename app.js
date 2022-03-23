@@ -15,8 +15,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // const upload = require("./controller/upload/index");
 app.use(express.static("public"));
 //角色模块
-const role = require("./controller/user/role")
-const reward = require("./controller/activity/reward")
+const role = require("./controller/user/role");
+const publish = require("./controller/activity/publish");
+const apply = require("./controller/activity/apply");
+const universe = require("./controller/manage/universe");
+const student = require("./controller/manage/student");
+
 // app.use((req, res, next) => {
 //   let token = req.headers["authorization"];
 //   if (token) {
@@ -47,8 +51,12 @@ const reward = require("./controller/activity/reward")
 
 // app.use("/user", user);
 // app.use("/upload", upload);
-app.use("/role",role)
-app.use("/activity",reward)
+app.use("/role", role);
+app.use("/activity", publish);
+app.use("/activity", apply);
+app.use("/universe", universe);
+app.use("/student", student);
+
 app.listen(3000, () => {
   console.log("3000的端口启动了");
 });

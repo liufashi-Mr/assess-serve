@@ -5,7 +5,7 @@ const {
   updateReward,
   getRewards,
   removeReward,
-} = require("../../modal/activity/reward");
+} = require("../../modal/activity/publish");
 //评奖信息-add
 router.post("/addReward", (req, res) => {
   const {
@@ -19,7 +19,6 @@ router.post("/addReward", (req, res) => {
     majorName,
     rewardProcess,
   } = req.body;
-  console.log(req.body);
   if (!rewardName || !level) {
     res.json({
       code: 401,
@@ -27,7 +26,7 @@ router.post("/addReward", (req, res) => {
     });
     return;
   }
-  let sql = `insert into t_rewards (reward_name,start_time,end_time,level,status,college_name,college_type,major_name,reward_process) values (?,?,?,?,?,?,?,?,?)`;
+  let sql = `insert into t_rewards (rewardName,startTime,endTime,level,status,collegeName,collegeType,majorName,rewardProcess) values (?,?,?,?,?,?,?,?,?)`;
   addReward(sql, [
     rewardName,
     startTime,
@@ -86,7 +85,7 @@ router.post("/updateReward", (req, res) => {
     });
     return;
   }
-  let sql = `update t_rewards set reward_name=? , start_time=? , end_time=? , level=? , status=? , college_name=? , college_type=? , major_name=? , reward_process=?  where id=${rewardId}`;
+  let sql = `update t_rewards set rewardName=? , startTime=? , endTime=? , level=? , status=? , collegeName=? , collegeType=? , majorName=? , rewardProcess=?  where id=${rewardId}`;
   updateReward(sql, [
     rewardName,
     startTime,
@@ -106,10 +105,16 @@ router.post("/updateReward", (req, res) => {
     });
 });
 router.post("/getRewards", (req, res) => {
-  console.log(21312);
+  const { keyword, currentPage = 1, pageSize = 10 } = req.body;
+  let sql = `select * from t_rewards limit ${(currentPage - 1) * pageSize} , ${ pageSize}`;
+  let sql2 = `select count(*) as total from t_rewards`;
 
-  let sql = `select * from t_rewards`;
-  getRewards(sql, [])
+  if (keyword) {
+    sql = `select * from t_rewards where rewardName like "%${keyword}%"`;
+    sql2 = `select count(*) as total from t_rewards where rewardName like "%${keyword}%"`;
+  }
+  console.log(sql);
+  getRewards(sql, sql2, [])
     .then((data) => {
       res.json(data);
     })
@@ -117,4 +122,5 @@ router.post("/getRewards", (req, res) => {
       res.json(err);
     });
 });
+//申请
 module.exports = router;

@@ -1,12 +1,12 @@
 const query = require("../db");
-const addReward = (sql, params) => {
+const applyReward = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
         if (res) {
           resolve({
             code: 200,
-            data: { msg: "添加成功" },
+            data: { msg: "申请成功" },
           });
           return;
         }
@@ -22,7 +22,7 @@ const addReward = (sql, params) => {
   });
 };
 
-const removeReward = (sql, params) => {
+const cancelApply = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
@@ -45,11 +45,11 @@ const removeReward = (sql, params) => {
   });
 };
 
-const updateReward = (sql, params) => {
+const updateApply = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
-        if (res.length > 0) {
+        if (res) {
           resolve({
             code: 200,
             data: res,
@@ -58,7 +58,7 @@ const updateReward = (sql, params) => {
         }
         resolve({
           code: 402,
-          message: "添加失败,检验传参",
+          message: "更新,检验传参",
         });
       })
       .catch((err) => {
@@ -67,11 +67,11 @@ const updateReward = (sql, params) => {
       });
   });
 };
-const getRewards = (sql, params) => {
+const getApplyList = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
-        if (res.length > 0) {
+        if (res) {
           resolve({
             code: 200,
             data: res,
@@ -90,8 +90,8 @@ const getRewards = (sql, params) => {
   });
 };
 module.exports = {
-  addReward,
-  updateReward,
-  getRewards,
-  removeReward,
+  applyReward,
+  cancelApply,
+  updateApply,
+  getApplyList,
 };
