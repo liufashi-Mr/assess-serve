@@ -67,7 +67,55 @@ const updateApply = (sql, params) => {
       });
   });
 };
+const confirmApply = (sql, params) => {
+  return new Promise((resolve, reject) => {
+    query(sql, params)
+      .then((res) => {
+        if (res) {
+          resolve({
+            code: 200,
+            data: res,
+          });
+          return;
+        }
+        resolve({
+          code: 402,
+          message: "更新,检验传参",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+};
 const getApplyList = (sql, params) => {
+  return new Promise((resolve, reject) => {
+    query(sql, params)
+      .then((res) => {
+        console.log(res)
+        if (res) {
+          resolve({
+            code: 200,
+            data: res.map((item) => ({
+              ...item,
+              applyAccessory: JSON.parse(item.applyAccessory),
+            })),
+          });
+          return;
+        }
+        resolve({
+          code: 402,
+          message: "获取失败",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+};
+const getStudentDetail = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
@@ -94,4 +142,6 @@ module.exports = {
   cancelApply,
   updateApply,
   getApplyList,
+  confirmApply,
+  getStudentDetail
 };

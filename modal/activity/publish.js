@@ -22,6 +22,7 @@ const addReward = (sql, params) => {
   });
 };
 
+
 const removeReward = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
@@ -44,12 +45,11 @@ const removeReward = (sql, params) => {
       });
   });
 };
-
 const updateReward = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
-        if (res.length > 0) {
+        if (res) {
           resolve({
             code: 200,
             data: res,
@@ -94,9 +94,34 @@ const getRewards = (sql, sql2, params) => {
       });
   });
 };
+
+const getRewardDetail = (sql, params) => {
+  return new Promise((resolve, reject) => {
+    query(sql, params)
+      .then((res) => {
+        console.log(res)
+        if (res) {
+          resolve({
+            code: 200,
+            data: res[0],
+          });
+          return;
+        }
+        resolve({
+          code: 402,
+          message: "获取成功",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+};
 module.exports = {
   addReward,
   updateReward,
   getRewards,
   removeReward,
+  getRewardDetail,
 };
