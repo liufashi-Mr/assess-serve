@@ -93,7 +93,6 @@ const getApplyList = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
-        console.log(res)
         if (res) {
           resolve({
             code: 200,
