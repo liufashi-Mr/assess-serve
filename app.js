@@ -58,6 +58,6 @@ app.use("/universe", universe);
 app.use("/student", student);
 app.use("/process", process);
 
-app.listen(3000, () => {
-  console.log("3000的端口启动了");
+app.listen(3001, () => {
+  console.log("3001的端口启动了");
 });

@@ -85,17 +85,13 @@ router.post("/getApplyList", (req, res) => {
   let sql = `select *,a.id as applyId, b.id as rewardId,c.id as studentId from t_reward_apply_list a join t_rewards b on a.rewardId=b.id join t_student c on a.studentId=c.id where 1 =1`;
   if (studentId) {
     sql += ` and studentId =${studentId}`;
-    if (status && !studentId) {
-      sql += ` applyStatus=${status}`;
-    }
-    if (status) {
-      sql += ` and applyStatus=${status}`;
-    }
+  } else {
+    sql += ` and applyStatus !=-1`;
   }
-  if (role) {
-    sql += ` and applyStep =${getRoleName(role)}`
+  if (role && role !== "admin") {
+    sql += ` and applyStep = '${getRoleName(role)}'`;
   }
-  getApplyList(sql, [])
+  getApplyList(sql)
     .then((data) => {
       res.json(data);
     })
@@ -112,7 +108,7 @@ router.post("/confirmApply", (req, res) => {
     });
     return;
   }
-  let sql = `update t_reward_apply_list set applyStatus=-1, applyStep=? where id=${applyId}`;
+  let sql = `update t_reward_apply_list set applyStatus=1, applyStep=? where id=${applyId}`;
   confirmApply(sql, [nextStep])
     .then((data) => {
       res.json(data);
