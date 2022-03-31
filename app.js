@@ -21,6 +21,7 @@ const universe = require("./controller/manage/universe");
 const student = require("./controller/manage/student");
 const upload = require("./controller/upload/index");
 const process = require("./controller/activity/process")
+const result = require("./controller/activity/result")
 // app.use((req, res, next) => {
 //   let token = req.headers["authorization"];
 //   if (token) {
@@ -57,6 +58,7 @@ app.use("/activity", apply);
 app.use("/universe", universe);
 app.use("/student", student);
 app.use("/process", process);
+app.use("/activity", result);
 
 app.listen(3001, () => {
   console.log("3001的端口启动了");

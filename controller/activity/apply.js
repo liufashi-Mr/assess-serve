@@ -135,6 +135,7 @@ router.post("/getStudentDetail", (req, res) => {
       res.json(err);
     });
 });
+
 router.post("/getApplyDetail", (req, res) => {
   const { applyId } = req.body;
   let sql = `select * from t_reward_apply_list where id=${applyId}`;
@@ -186,5 +187,5 @@ function getRoleName(role) {
       return "学院";
   }
 }
-//申请
+
 module.exports = router;
