@@ -48,6 +48,36 @@ const updateStudent = (sql, params) => {
       });
   });
 };
+const addGrade = (sql1, sql2, params) => {
+  return new Promise((resolve, reject) => {
+    query(sql2)
+      .then((res) => {
+        query(sql1, params)
+          .then((res) => {
+            if (res) {
+              resolve({
+                code: 200,
+                data: res,
+                msg: "添加成功",
+              });
+              return;
+            }
+            resolve({
+              code: 402,
+              message: "获取失败,检验传参",
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            reject(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
+  });
+};
 const addStudent = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
@@ -71,4 +101,4 @@ const addStudent = (sql, params) => {
       });
   });
 };
-module.exports = { getStudent, updateStudent,addStudent };
+module.exports = { getStudent, updateStudent, addStudent, addGrade };

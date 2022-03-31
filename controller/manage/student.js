@@ -4,6 +4,7 @@ const {
   getStudent,
   updateStudent,
   addStudent,
+  addGrade
 } = require("../../modal/manage/student");
 router.post("/getStudent", (req, res) => {
   const {
@@ -139,6 +140,43 @@ router.post("/addStudent", (req, res) => {
     sex,
     grade.trim(),
   ])
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
+router.post("/addGrade", (req, res) => {
+  const { studentId, subject, mark, isPass } = req.body;
+  if (!studentId || !subject || !mark) {
+    res.json({
+      code: 401,
+      message: "入参不符",
+    });
+    return;
+  }
+  const sql_ = `delete from t_subject where studentId =${studentId}` 
+  const sql = `insert into t_subject (studentId, subject, mark, isPass) values(?,?,?,?)`;
+  addGrade(sql,sql_, [studentId, subject, mark, isPass])
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
+router.post("/getGrade", (req, res) => {
+  const { studentId } = req.body;
+  if (!studentId) {
+    res.json({
+      code: 401,
+      message: "入参不符",
+    });
+    return;
+  }
+  const sql = `select * from t_subject where studentId=?`;
+  addStudent(sql, [studentId])
     .then((data) => {
       res.json(data);
     })
