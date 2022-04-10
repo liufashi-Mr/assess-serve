@@ -19,7 +19,7 @@ router.post("/addReward", (req, res) => {
     rewardProcess,
     description,
   } = req.body;
-  if (!rewardName || !(collegeId || typeId || majorId) || !description) {
+  if (!rewardName ||  !description) {
     res.json({
       code: 401,
       message: "入参不符",

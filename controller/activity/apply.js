@@ -33,7 +33,7 @@ router.post("/applyReward", (req, res) => {
     JSON.stringify(applyAccessory),
     studentName,
     studentNumber,
-    "0",
+    "-1",
   ])
     .then((data) => {
       res.json(data);
@@ -88,7 +88,7 @@ router.post("/getApplyList", (req, res) => {
   } else {
     sql += ` and applyStatus !=-1`;
   }
-  if (role && role !== "admin") {
+  if (role && role !== "admin"&&role !== "student") {
     sql += ` and applyStep = '${getRoleName(role)}'`;
   }
   getApplyList(sql)

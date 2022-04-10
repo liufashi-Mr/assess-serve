@@ -50,12 +50,15 @@ router.post("/auditProcess", (req, res) => {
       msg: "入参不符",
     });
   }
-  let sql = `update t_reward_apply_list set applyStep='${nextStep}',  applyStatus=1 where id=${applyId}`;
+  let sql = `update t_reward_apply_list set applyStep='${nextStep}',  applyStatus=? where id=${applyId}`;
   if (nextStep.trim() === "完成") {
-    sql = `update t_reward_apply_list set applyStep='${nextStep}', applyStatus=2 where id=${applyId}`;
+    sql = `update t_reward_apply_list set applyStep='${nextStep}', applyStatus=? where id=${applyId}`;
   }
-  if (!isPass) {
+  if (isPass==0) {
     sql = `update t_reward_apply_list set applyStatus=0 where id=${applyId}`;
+  }
+  if (isPass==3) {
+    sql = `update t_reward_apply_list set applyStatus=-2 where id=${applyId}`;
   }
 
   auditProcess(sql)
