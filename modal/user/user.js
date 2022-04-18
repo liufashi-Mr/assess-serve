@@ -167,7 +167,7 @@ const getUserInfo=(sql,param)=>{
                 }
                 resolve({
                     code:402,
-                    message:'获取用户信息失败'
+                    message:'获取用户信息失败,获取用户信息失败,请检查用户名、密码和用户角色是否正确'
                 })
             }).catch(err=>{
                 reject(err)
