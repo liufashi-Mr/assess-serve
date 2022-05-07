@@ -16,6 +16,7 @@ router.post("/addReward", (req, res) => {
     collegeId,
     typeId,
     majorId,
+    grade,
     rewardProcess,
     description,
   } = req.body;
@@ -32,8 +33,9 @@ router.post("/addReward", (req, res) => {
     collegeId,
     typeId,
     majorId,
+    grade,
     rewardProcess,
-    description) values (?,?,?,?,?,?,?,?)`;
+    description) values (?,?,?,?,?,?,?,?,?)`;
   addReward(sql, [
     rewardName,
     startTime,
@@ -41,6 +43,7 @@ router.post("/addReward", (req, res) => {
     collegeId,
     typeId,
     majorId,
+    grade,
     rewardProcess,
     description,
   ])
@@ -80,6 +83,7 @@ router.post("/updateReward", (req, res) => {
     collegeId,
     typeId,
     majorId,
+    grade,
     rewardProcess,
     description,
   } = req.body;
@@ -91,7 +95,7 @@ router.post("/updateReward", (req, res) => {
     return;
   }
   let sql = `update t_rewards set rewardName=? , startTime=? , 
-  endTime=? , collegeId=? , typeId=? , majorId=? , rewardProcess=? , description=? where id=${id}`;
+  endTime=? , collegeId=? , typeId=? , majorId=? , grade=? , rewardProcess=? , description=? where id=${id}`;
   updateReward(sql, [
     rewardName,
     startTime,
@@ -99,6 +103,7 @@ router.post("/updateReward", (req, res) => {
     collegeId,
     typeId,
     majorId,
+    grade,
     rewardProcess,
     description,
   ])
