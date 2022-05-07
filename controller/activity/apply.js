@@ -88,7 +88,7 @@ router.post("/getApplyList", (req, res) => {
   } else {
     sql += ` and applyStatus !=-1`;
   }
-  if (role && role !== "admin"&&role !== "student") {
+  if (role && role !== "admin" && role !== "student" && role !== "office") {
     sql += ` and applyStep = '${getRoleName(role)}'`;
   }
   getApplyList(sql)
