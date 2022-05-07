@@ -22,7 +22,6 @@ const addReward = (sql, params) => {
   });
 };
 
-
 const removeReward = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
@@ -71,13 +70,13 @@ const getRewards = (sql, sql2, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
-        query(sql2).then((data) => {
+        query(sql2, params).then((data) => {
           console.log(data);
-          if (res&&data) {
+          if (res && data) {
             resolve({
               code: 200,
               data: res,
-              total:data[0].total
+              total: data[0].total,
             });
             return;
           }
@@ -86,7 +85,6 @@ const getRewards = (sql, sql2, params) => {
             message: "获取失败",
           });
         });
-        
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +97,7 @@ const getRewardDetail = (sql, params) => {
   return new Promise((resolve, reject) => {
     query(sql, params)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         if (res) {
           resolve({
             code: 200,

@@ -19,7 +19,7 @@ router.post("/addReward", (req, res) => {
     rewardProcess,
     description,
   } = req.body;
-  if (!rewardName ||  !description) {
+  if (!rewardName || !description) {
     res.json({
       code: 401,
       message: "入参不符",
@@ -110,17 +110,45 @@ router.post("/updateReward", (req, res) => {
     });
 });
 router.post("/getRewards", (req, res) => {
-  const { keyword, currentPage = 1, pageSize = 10 } = req.body;
-  let sql = `select * from t_rewards limit ${
-    (currentPage - 1) * pageSize
-  } , ${pageSize}`;
-  let sql2 = `select count(*) as total from t_rewards`;
-
+  const {
+    keyword,
+    typeId,
+    collegeId,
+    majorId,
+    currentPage = 1,
+    pageSize = 10,
+    grade,
+  } = req.body;
+  let sql = `select * from t_rewards where 1=1`;
+  let sql2 = `select count(*) as total from t_rewards where 1=1`;
   if (keyword) {
-    sql = `select * from t_rewards where rewardName like "%${keyword}%"`;
-    sql2 = `select count(*) as total from t_rewards where rewardName like "%${keyword}%"`;
+    sql += ` and rewardName like "%${keyword}%"`;
+    sql2 += ` and rewardName like "%${keyword}%"`;
   }
-  getRewards(sql, sql2, [])
+  if (typeId) {
+    sql += " and typeId=?";
+    sql2 += " and typeId=?";
+  }
+  if (collegeId) {
+    sql += " and collegeId=?";
+    sql2 += " and collegeId=?";
+  }
+  if (majorId) {
+    sql += " and majorId=?";
+    sql2 += " and majorId=?";
+  }
+  if (grade) {
+    sql += " and grade=?";
+    sql2 += " and grade=?";
+  }
+  sql += ` limit ${(currentPage - 1) * pageSize} , ${pageSize}`;
+  sql2 += ` limit ${(currentPage - 1) * pageSize} , ${pageSize}`;
+  console.log(sql,sql2,'====')
+  getRewards(
+    sql,
+    sql2,
+    [typeId, collegeId, majorId, grade].filter((x) => x)
+  )
     .then((data) => {
       res.json(data);
     })
