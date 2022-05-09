@@ -123,7 +123,10 @@ router.post("/getRewards", (req, res) => {
     currentPage = 1,
     pageSize = 10,
     grade,
+    date = [],
   } = req.body;
+  const [startTime, endTime] = date;
+  console.log(startTime, endTime);
   let sql = `select * from t_rewards where 1=1`;
   let sql2 = `select count(*) as total from t_rewards where 1=1`;
   if (keyword) {
@@ -146,9 +149,13 @@ router.post("/getRewards", (req, res) => {
     sql += " and grade=?";
     sql2 += " and grade=?";
   }
+  if (date.length) {
+    sql += ` and (endTime < '${endTime}' OR endTime='') and (startTime >  '${startTime}' OR startTime='')`;
+    sql2 += ` and (endTime < '${endTime}' OR endTime='') and (startTime >  '${startTime}' OR startTime='')`;
+  }
   sql += ` limit ${(currentPage - 1) * pageSize} , ${pageSize}`;
   sql2 += ` limit ${(currentPage - 1) * pageSize} , ${pageSize}`;
-  console.log(sql,sql2,'====')
+  console.log(sql);
   getRewards(
     sql,
     sql2,
