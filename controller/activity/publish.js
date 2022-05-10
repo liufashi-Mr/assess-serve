@@ -121,7 +121,7 @@ router.post("/getRewards", (req, res) => {
     collegeId,
     majorId,
     currentPage = 1,
-    pageSize = 10,
+    pageSize = 10000,
     grade,
     date = [],
   } = req.body;
