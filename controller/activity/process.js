@@ -4,6 +4,7 @@ const {
   createProcess,
   getProcess,
   auditProcess,
+  auditProcessSure,
 } = require("../../modal/activity/process");
 router.post("/getProcess", (req, res) => {
   let sql = `select * from t_flow`;
@@ -54,10 +55,10 @@ router.post("/auditProcess", (req, res) => {
   if (nextStep.trim() === "完成") {
     sql = `update t_reward_apply_list set applyStep='${nextStep}', applyStatus=? where id=${applyId}`;
   }
-  if (isPass==0) {
+  if (isPass == 0) {
     sql = `update t_reward_apply_list set applyStatus=0 where id=${applyId}`;
   }
-  if (isPass==3) {
+  if (isPass == 3) {
     sql = `update t_reward_apply_list set applyStatus=-2 where id=${applyId}`;
   }
 
@@ -69,5 +70,26 @@ router.post("/auditProcess", (req, res) => {
       res.json(err);
     });
 });
-
+router.post("/auditProcessSure", (req, res) => {
+  const { applyId, isPass } = req.body;
+  if (!applyId) {
+    res.json({
+      code: 400,
+      msg: "入参不符",
+    });
+  }
+  let sql = "";
+  if (isPass) {
+    sql = `update t_reward_apply_list set applyStep='完成',  applyStatus=2 where id=${applyId}`;
+  } else {
+    sql = `update t_reward_apply_list set applyStatus=-2 where id=${applyId}`;
+  }
+  auditProcessSure(sql)
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
 module.exports = router;
