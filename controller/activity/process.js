@@ -6,6 +6,7 @@ const {
   auditProcess,
   auditProcessSure,
 } = require("../../modal/activity/process");
+// 获取流程列表
 router.post("/getProcess", (req, res) => {
   let sql = `select * from t_flow`;
   getProcess(sql)
@@ -16,6 +17,7 @@ router.post("/getProcess", (req, res) => {
       res.json(err);
     });
 });
+// 添加新的流程
 router.post("/createProcess", (req, res) => {
   const {
     flowName,
@@ -43,6 +45,7 @@ router.post("/createProcess", (req, res) => {
       res.json(err);
     });
 });
+// 审核,通过 驳回 不通过
 router.post("/auditProcess", (req, res) => {
   const { nextStep, applyId, isPass } = req.body;
   if (!applyId) {
@@ -70,6 +73,7 @@ router.post("/auditProcess", (req, res) => {
       res.json(err);
     });
 });
+// 管理员一键审核,通过 不通过
 router.post("/auditProcessSure", (req, res) => {
   const { applyId, isPass } = req.body;
   if (!applyId) {

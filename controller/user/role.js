@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { login } = require("../../modal/user/role");
+// 角色登录
 router.post("/login", (req, res) => {
   const { username, password, role } = req.body;
   if (!(username && password && role)) {

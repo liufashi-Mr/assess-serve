@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getUniverse,addUniverse } = require("../../modal/manage/universe");
+// 获取学校的学科学院专业列表
 router.post("/getUniverse", (req, res) => {
   const sql = `select * from t_universe`;
   getUniverse(sql)
@@ -11,16 +12,7 @@ router.post("/getUniverse", (req, res) => {
       res.json(err);
     });
 });
-router.post("/getUniverse", (req, res) => {
-  const sql = `select * from t_universe`;
-  getUniverse(sql)
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
+// 添加学校的学科学院专业列表
 router.post("/addUniverse", (req, res) => {
   const { name, description,parentId } = req.body;
   if (!name) {

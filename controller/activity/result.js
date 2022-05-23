@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getRewardResult } = require("../../modal/activity/result");
+// 根据奖励id获取审核结果
 router.post("/getRewardResult", (req, res) => {
   const { rewardId, getAll } = req.body;
   if (!rewardId) {
@@ -21,6 +22,7 @@ router.post("/getRewardResult", (req, res) => {
       res.json(err);
     });
 });
+// 获取所有审核结果
 router.post("/getAllRewardResult", (req, res) => {
   const { getAll } = req.body;
   let sql = `select * from t_rewards a join t_reward_apply_list b on a.id=b.rewardId`;

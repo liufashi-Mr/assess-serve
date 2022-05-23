@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {getId} = require('../../modal/classification/class')
 
-// 根据name字段获取品类表的ID
+// 未使用
 router.post('/class',(req,res)=>{
     let {name} = req.body;
     if(!name){

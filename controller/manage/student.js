@@ -6,6 +6,7 @@ const {
   addStudent,
   addGrade,
 } = require("../../modal/manage/student");
+// 获取学生列表
 router.post("/getStudent", (req, res) => {
   const {
     studentName,
@@ -64,6 +65,7 @@ router.post("/getStudent", (req, res) => {
       res.json(err);
     });
 });
+// 更新学生信息
 router.post("/updateStudent", (req, res) => {
   const {
     studentId,
@@ -102,6 +104,7 @@ router.post("/updateStudent", (req, res) => {
       res.json(err);
     });
 });
+// 增加学生
 router.post("/addStudent", (req, res) => {
   const {
     studentName,
@@ -147,6 +150,7 @@ router.post("/addStudent", (req, res) => {
       res.json(err);
     });
 });
+//通过学生id给学生录入成绩
 router.post("/addGrade", (req, res) => {
   const { studentId, subject, mark, isPass } = req.body;
   if (!studentId || !subject || !mark) {
@@ -166,6 +170,7 @@ router.post("/addGrade", (req, res) => {
       res.json(err);
     });
 });
+//通过学生id获取学生成绩
 router.post("/getGrade", (req, res) => {
   const { studentId } = req.body;
   if (!studentId) {
@@ -184,6 +189,7 @@ router.post("/getGrade", (req, res) => {
       res.json(err);
     });
 });
+//通过学生id获取学生信息
 router.post("/getStudentInfo", (req, res) => {
   const { studentId } = req.body;
   if (!studentId) {
@@ -202,6 +208,7 @@ router.post("/getStudentInfo", (req, res) => {
       res.json(err);
     });
 });
+//通过学生id更新学生信息
 router.post("/updateStudentInfo", (req, res) => {
   const { studentId, username, password } = req.body;
   if (!studentId || !username || !password) {

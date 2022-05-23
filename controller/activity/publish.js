@@ -114,6 +114,7 @@ router.post("/updateReward", (req, res) => {
       res.json(err);
     });
 });
+// 获取评奖评优信息列表
 router.post("/getRewards", (req, res) => {
   const {
     keyword,
@@ -168,6 +169,7 @@ router.post("/getRewards", (req, res) => {
       res.json(err);
     });
 });
+// 通过主键id获取奖励详情
 router.post("/getRewardDetail", (req, res) => {
   const { rewardId } = req.body;
   const sql = `select *, r.description as rewardDesc, r.id as rewardId from t_rewards r join t_flow f on r.rewardProcess=f.id where r.id=${rewardId}`;
